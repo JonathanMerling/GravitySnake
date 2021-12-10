@@ -46,13 +46,15 @@ namespace gravity_snake
         void create(int i)
         {
             food[i] = new Point(rnand.Next(50, 600), rnand.Next(50, 600));
-            for (int j = 0; j < food.Length; j++) if (j != i) if ((food[i] - food[j]).lenght < 20)
+            for (int j = 0; j < food.Length; j++)
+                if (j != i)
+                    if ((food[i] - food[j]).length < 20)
                     {
                         create(i);
                         return;
                     }
             int[] s = sh.size;
-            for (int j = 0; j < sh.tail.Length; j++) if ((food[i] - sh.tail[j]).lenght < s[j] + 10)
+            for (int j = 0; j < sh.tail.Length; j++) if ((food[i] - sh.tail[j]).length < s[j] + 10)
                 {
                     create(i);
                 }
@@ -67,7 +69,7 @@ namespace gravity_snake
             Invalidate();
             if (Math.Min(gh.x, gh.y) < 5 || Math.Max(gh.x, gh.y) > 645) return;
             sh.move(gh);
-            for (int i = 0; i < food.Length; i++) if ((food[i] - sh.tail[sh.tail.Length - 1]).lenght < sh.endsize + 10)
+            for (int i = 0; i < food.Length; i++) if ((food[i] - sh.tail[sh.tail.Length - 1]).length < sh.endsize + 10)
                 {
                     add += 10;
                     create(i);
@@ -132,7 +134,7 @@ namespace gravity_snake
             this.y = y;
             
         }
-        public double lenght
+        public double length
         {
             get
             {
@@ -140,7 +142,7 @@ namespace gravity_snake
             }
             set
             {
-                double n = value / lenght;
+                double n = value / length;
                 x *= n;
                 y *= n;
             }
@@ -201,7 +203,7 @@ namespace gravity_snake
             }
             set
             {
-                double r = lenght;
+                double r = length;
                 double t = value / 180 * Math.PI;
                 x = r * Math.Cos(t);
                 y = r * Math.Sin(t);
@@ -238,7 +240,7 @@ namespace gravity_snake
             for (int i = 0; i < end; i++)
             {
                 vector a = gh - tail[tail.Length - 1];
-                a.lenght = gravity * Math.Pow(Math.Log(tail.Length), 1.5);
+                a.length = gravity * Math.Pow(Math.Log(tail.Length), 1.5);
                 tail[tail.Length - 1] += (velocity + a / 200000) / 100000;
                 velocity += a / 100000;
             }
@@ -266,17 +268,17 @@ namespace gravity_snake
                 dir.x = 1;
             }
             vector m = new vector(endsize * 5 / 6, endsize * 5 / 6);
-            dir.lenght = endsize / 2;
+            dir.length = endsize / 2;
             a.DrawArc(new Pen(Color.Black), new Rectangle((Point)(tail[tail.Length - 1] - m), new Size((Point)(m * 2))), (float)dir.argument - 50, (float)100);
             Point a1 = (Point)(tail[tail.Length - 1] + dir);
-            dir.lenght = endsize * 2 / 3;
+            dir.length = endsize * 2 / 3;
             dir.argument -= 5;
             Point a2 = (Point)(tail[tail.Length - 1] + dir);
             dir.argument += 10;
             Point a3 = (Point)(tail[tail.Length - 1] + dir);
             Point[] b = { a1, a2, a3, a1 };
             a.DrawLines(new Pen(Color.Black), b);
-            dir.lenght = endsize / 3;
+            dir.length = endsize / 3;
             dir.argument += 15;
             vector d = new vector(2, 2);
             Size elps = new Size((Point)(2 * d));
@@ -300,7 +302,7 @@ namespace gravity_snake
                 for (int i = 0; i < re.Length; i++)
                 {
                     vector a = tail[tail.Length - 1] - tail[i];
-                    re[i] = a.lenght < endsize + si[i];
+                    re[i] = a.length < endsize + si[i];
                 }
                 return re;
             }
@@ -315,7 +317,7 @@ namespace gravity_snake
                 for (int i = 0; i < re.Length; i++)
                 {
                     vector a = tail[tail.Length - 1] - tail[i];
-                    re[i] = a.lenght < endsize + si[i]-cleng;
+                    re[i] = a.length < endsize + si[i]-cleng;
                 }
                 return re;
             }
